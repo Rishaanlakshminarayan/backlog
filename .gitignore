@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# build output
+app/dist/
+dist/
+
+# env / secrets
+.env
+*.env.local
+
+# OS
+.DS_Store
+
+# logs
+*.log
+
+# personal study material & design references — not app code, kept out of the public repo
+/notes/
+learning_ux.png

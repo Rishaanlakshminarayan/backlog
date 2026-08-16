@@ -30,7 +30,7 @@ export function Resistor({ x1, y1, x2, y2, label }: { x1: number; y1: number; x2
 
   return (
     <g>
-      <path d={path} fill="none" stroke="#2c2822" strokeWidth="1.75" strokeLinejoin="round" />
+      <path d={path} fill="none" stroke="var(--color-ink)" strokeWidth="1.75" strokeLinejoin="round" />
       {label && (
         <text x={midAdj.x} y={midAdj.y} textAnchor="middle" className="fill-terracotta text-[11px] font-medium">
           {label}
@@ -54,17 +54,17 @@ export function Battery({ x1, y1, x2, y2, label }: { x1: number; y1: number; x2:
   const p2 = { x: x1 + ux * len * (mid + gap / len), y: y1 + uy * len * (mid + gap / len) }
 
   const longLine = (c: { x: number; y: number }, size: number) => (
-    <line x1={c.x - px * size} y1={c.y - py * size} x2={c.x + px * size} y2={c.y + py * size} stroke="#2c2822" strokeWidth="2" />
+    <line x1={c.x - px * size} y1={c.y - py * size} x2={c.x + px * size} y2={c.y + py * size} stroke="var(--color-ink)" strokeWidth="2" />
   )
 
   const labelPos = { x: (x1 + x2) / 2 + px * 16, y: (y1 + y2) / 2 + py * 16 }
 
   return (
     <g>
-      <line x1={x1} y1={y1} x2={p1.x} y2={p1.y} stroke="#2c2822" strokeWidth="1.75" />
+      <line x1={x1} y1={y1} x2={p1.x} y2={p1.y} stroke="var(--color-ink)" strokeWidth="1.75" />
       {longLine(p1, 8)}
       {longLine(p2, 4)}
-      <line x1={p2.x} y1={p2.y} x2={x2} y2={y2} stroke="#2c2822" strokeWidth="1.75" />
+      <line x1={p2.x} y1={p2.y} x2={x2} y2={y2} stroke="var(--color-ink)" strokeWidth="1.75" />
       {label && (
         <text x={labelPos.x} y={labelPos.y} textAnchor="middle" className="fill-blue text-[11px] font-medium">
           {label}
@@ -103,9 +103,9 @@ export function CurrentSource({
 
   return (
     <g>
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#2c2822" strokeWidth="1.75" />
-      <circle cx={cx} cy={cy} r={radius} fill="#fffdf8" stroke="#2c2822" strokeWidth="1.75" />
-      <line x1={cx - ux * radius * 0.7} y1={cy - uy * radius * 0.7} x2={tipX} y2={tipY} stroke="#8b7cc8" strokeWidth="1.75" markerEnd="url(#loopArrowHead)" />
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-ink)" strokeWidth="1.75" />
+      <circle cx={cx} cy={cy} r={radius} fill="var(--color-paper)" stroke="var(--color-ink)" strokeWidth="1.75" />
+      <line x1={cx - ux * radius * 0.7} y1={cy - uy * radius * 0.7} x2={tipX} y2={tipY} stroke="var(--color-purple)" strokeWidth="1.75" markerEnd="url(#loopArrowHead)" />
       {label && (
         <text x={labelPos.x} y={labelPos.y} textAnchor="middle" className="fill-purple text-[11px] font-medium">
           {label}
@@ -116,7 +116,7 @@ export function CurrentSource({
 }
 
 export function Wire({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) {
-  return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#2c2822" strokeWidth="1.75" />
+  return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-ink)" strokeWidth="1.75" />
 }
 
 export function LoopArrow({ cx, cy, r = 22, label }: { cx: number; cy: number; r?: number; label: string }) {
@@ -129,7 +129,7 @@ export function LoopArrow({ cx, cy, r = 22, label }: { cx: number; cy: number; r
   const ey = cy + r * Math.sin(toRad(end))
   return (
     <g>
-      <path d={`M ${sx} ${sy} A ${r} ${r} 0 1 1 ${ex} ${ey}`} fill="none" stroke="#8b7cc8" strokeWidth="1.75" markerEnd="url(#loopArrowHead)" />
+      <path d={`M ${sx} ${sy} A ${r} ${r} 0 1 1 ${ex} ${ey}`} fill="none" stroke="var(--color-purple)" strokeWidth="1.75" markerEnd="url(#loopArrowHead)" />
       <text x={cx} y={cy + 4} textAnchor="middle" className="fill-purple text-[12px] font-semibold">
         {label}
       </text>
@@ -141,19 +141,19 @@ export function CircuitDefs() {
   return (
     <defs>
       <marker id="loopArrowHead" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-        <path d="M0,0 L7,3.5 L0,7 Z" fill="#8b7cc8" />
+        <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--color-purple)" />
       </marker>
     </defs>
   )
 }
 
 export function Node({ x, y }: { x: number; y: number }) {
-  return <circle cx={x} cy={y} r="2.5" fill="#2c2822" />
+  return <circle cx={x} cy={y} r="2.5" fill="var(--color-ink)" />
 }
 
 export function GroundSymbol({ x, y }: { x: number; y: number }) {
   return (
-    <g stroke="#2c2822" strokeWidth="1.75">
+    <g stroke="var(--color-ink)" strokeWidth="1.75">
       <line x1={x - 10} y1={y} x2={x + 10} y2={y} />
       <line x1={x - 6} y1={y + 4} x2={x + 6} y2={y + 4} />
       <line x1={x - 2.5} y1={y + 8} x2={x + 2.5} y2={y + 8} />

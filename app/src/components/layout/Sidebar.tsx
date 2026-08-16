@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { curriculum, findSubject } from '../../content/curriculum'
 import { accentClasses } from '../../lib/accent'
+import { DisplaySettings } from './DisplaySettings'
 
 const CURRENT_SEMESTER = 1
 
@@ -88,6 +89,8 @@ export function Sidebar() {
           })}
         </div>
       </div>
+
+      <DisplaySettings />
     </aside>
   )
 }

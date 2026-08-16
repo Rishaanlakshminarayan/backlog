@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { PageShell } from './components/layout/PageShell'
+import { PreferencesEffect } from './components/layout/PreferencesEffect'
 import { Home } from './pages/Home'
 import { SubjectPage } from './pages/SubjectPage'
 import { TopicPage } from './pages/TopicPage'
@@ -8,6 +9,7 @@ import { PlannerPage } from './pages/PlannerPage'
 function App() {
   return (
     <PageShell>
+      <PreferencesEffect />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/planner" element={<PlannerPage />} />

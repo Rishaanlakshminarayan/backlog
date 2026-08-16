@@ -29,7 +29,7 @@ export function KclKvlPractice() {
   return (
     <div className="flex flex-col gap-5">
       <svg viewBox="0 0 300 200" className="w-full max-w-sm mx-auto">
-        <circle cx="150" cy="100" r="7" fill="#2c2822" />
+        <circle cx="150" cy="100" r="7" fill="var(--color-ink)" />
         <text x="150" y="130" textAnchor="middle" className="fill-ink-faint text-[10px]">
           node
         </text>

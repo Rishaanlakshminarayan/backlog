@@ -28,6 +28,30 @@
   --shadow-card-hover: 0 2px 4px rgba(44, 40, 34, 0.06), 0 16px 32px -14px rgba(44, 40, 34, 0.18);
 }
 
+:root[data-theme='dark'] {
+  --color-cream: #1e1c17;
+  --color-cream-soft: #27241d;
+  --color-paper: #2c2921;
+  --color-ink: #ece4d3;
+  --color-ink-soft: #b6ac97;
+  --color-ink-faint: #837a67;
+  --color-line: #423d33;
+
+  --color-purple: #b6a6ec;
+  --color-purple-soft: #36304e;
+  --color-sage: #9ec798;
+  --color-sage-soft: #263a28;
+  --color-terracotta: #ee9e74;
+  --color-terracotta-soft: #402a1e;
+  --color-blue: #8fbbda;
+  --color-blue-soft: #21313f;
+  --color-gold: #e2b968;
+  --color-gold-soft: #3b2f18;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 32px -14px rgba(0, 0, 0, 0.65);
+}
+
 @layer base {
   html {
     background: var(--color-cream);

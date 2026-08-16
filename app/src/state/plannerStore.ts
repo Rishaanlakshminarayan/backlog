@@ -41,7 +41,7 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
   fetchTasks: async () => {
     set({ loading: true, error: null })
     try {
-      const tasks = await json<PlannerTask[]>(await fetch('/api/planner/tasks'))
+      const tasks = await json<PlannerTask[]>(await fetch('/api/planner/tasks', { credentials: 'include' }))
       set({ tasks, loading: false })
     } catch (err) {
       set({ loading: false, error: (err as Error).message })
@@ -52,6 +52,7 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
     const task = await json<PlannerTask>(
       await fetch('/api/planner/tasks', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(input),
       }),
@@ -63,6 +64,7 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
     const updated = await json<PlannerTask>(
       await fetch(`/api/planner/tasks/${id}`, {
         method: 'PATCH',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(patch),
       }),
@@ -71,7 +73,7 @@ export const usePlannerStore = create<PlannerState>((set, get) => ({
   },
 
   deleteTask: async (id) => {
-    await fetch(`/api/planner/tasks/${id}`, { method: 'DELETE' })
+    await fetch(`/api/planner/tasks/${id}`, { method: 'DELETE', credentials: 'include' })
     set({ tasks: get().tasks.filter((t) => t.id !== id) })
   },
 

@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { PageShell } from './components/layout/PageShell'
 import { PreferencesEffect } from './components/layout/PreferencesEffect'
+import { ProgressSyncEffect } from './components/layout/ProgressSyncEffect'
 import { Home } from './pages/Home'
 import { SubjectPage } from './pages/SubjectPage'
 import { TopicPage } from './pages/TopicPage'
@@ -10,6 +11,7 @@ function App() {
   return (
     <PageShell>
       <PreferencesEffect />
+      <ProgressSyncEffect />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/planner" element={<PlannerPage />} />

@@ -8,6 +8,11 @@ dist/
 # env / secrets
 .env
 *.env.local
+.auth-secret
+
+# real user data (names/emails/avatars) — never belongs in the public repo
+server/data/users.json
+server/data/progress.json
 
 # OS
 .DS_Store

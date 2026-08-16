@@ -2,8 +2,12 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import { plannerRouter } from './routes/planner.js'
 import { notionRouter } from './routes/notion.js'
+import { authRouter } from './routes/auth.js'
+import { progressRouter } from './routes/progress.js'
+import { attachUser } from './middleware/auth.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -21,7 +25,7 @@ async function loadEnv() {
       if (!(key in process.env)) process.env[key] = value
     }
   } catch {
-    // no .env yet — fine, Notion routes stay dormant
+    // no .env yet — fine, Notion/auth routes stay dormant
   }
 }
 
@@ -29,7 +33,11 @@ await loadEnv()
 
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
+app.use(attachUser)
 
+app.use('/api/auth', authRouter)
+app.use('/api/progress', progressRouter)
 app.use('/api/planner', plannerRouter)
 app.use('/api/notion', notionRouter)
 

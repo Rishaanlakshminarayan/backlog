@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { usePlannerStore, type PlannerTask } from '../../state/plannerStore'
+import { useAuthStore } from '../../state/authStore'
 import { curriculum } from '../../content/curriculum'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
@@ -15,14 +16,17 @@ const subjectOptions = curriculum.flatMap((s) => s.subjects.map((sub) => ({ id: 
 
 export function TaskBoard() {
   const { tasks, loading, error, fetchTasks, addTask } = usePlannerStore()
+  const userId = useAuthStore((s) => s.user?.id ?? null)
   const [title, setTitle] = useState('')
   const [subjectId, setSubjectId] = useState('')
   const [priority, setPriority] = useState<PlannerTask['priority']>('medium')
   const [dueDate, setDueDate] = useState('')
 
+  // Re-fetch whenever sign-in state changes so the board switches between
+  // the shared anonymous pool and the signed-in user's own tasks.
   useEffect(() => {
     fetchTasks()
-  }, [fetchTasks])
+  }, [fetchTasks, userId])
 
   async function handleAdd(e: React.FormEvent) {
     e.preventDefault()

@@ -4,9 +4,16 @@ import { readTasks, writeTasks } from '../store.js'
 
 export const plannerRouter = Router()
 
-plannerRouter.get('/tasks', async (_req, res) => {
+// Signed-in users get their own board; signed-out visitors share one
+// anonymous pool (the original single-board behaviour, preserved so nothing
+// breaks for anyone who never logs in).
+const ownerOf = (req) => req.user?.id ?? null
+const taskOwner = (task) => task.ownerId ?? null
+
+plannerRouter.get('/tasks', async (req, res) => {
   const tasks = await readTasks()
-  res.json(tasks)
+  const owner = ownerOf(req)
+  res.json(tasks.filter((t) => taskOwner(t) === owner))
 })
 
 plannerRouter.post('/tasks', async (req, res) => {
@@ -17,6 +24,7 @@ plannerRouter.post('/tasks', async (req, res) => {
   const tasks = await readTasks()
   const task = {
     id: randomUUID(),
+    ownerId: ownerOf(req),
     title,
     subjectId,
     dueDate,
@@ -32,16 +40,16 @@ plannerRouter.post('/tasks', async (req, res) => {
 plannerRouter.patch('/tasks/:id', async (req, res) => {
   const tasks = await readTasks()
   const idx = tasks.findIndex((t) => t.id === req.params.id)
-  if (idx === -1) return res.status(404).json({ error: 'not found' })
-  tasks[idx] = { ...tasks[idx], ...req.body, id: tasks[idx].id }
+  if (idx === -1 || taskOwner(tasks[idx]) !== ownerOf(req)) return res.status(404).json({ error: 'not found' })
+  tasks[idx] = { ...tasks[idx], ...req.body, id: tasks[idx].id, ownerId: tasks[idx].ownerId }
   await writeTasks(tasks)
   res.json(tasks[idx])
 })
 
 plannerRouter.delete('/tasks/:id', async (req, res) => {
   const tasks = await readTasks()
-  const next = tasks.filter((t) => t.id !== req.params.id)
-  if (next.length === tasks.length) return res.status(404).json({ error: 'not found' })
-  await writeTasks(next)
+  const target = tasks.find((t) => t.id === req.params.id)
+  if (!target || taskOwner(target) !== ownerOf(req)) return res.status(404).json({ error: 'not found' })
+  await writeTasks(tasks.filter((t) => t.id !== req.params.id))
   res.status(204).end()
 })

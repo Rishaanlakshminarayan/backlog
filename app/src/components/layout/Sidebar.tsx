@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { curriculum, findSubject } from '../../content/curriculum'
 import { accentClasses } from '../../lib/accent'
 import { DisplaySettings } from './DisplaySettings'
+import { AccountPanel } from './AccountPanel'
 
 const CURRENT_SEMESTER = 1
 
@@ -39,6 +40,8 @@ export function Sidebar() {
           </div>
         </div>
       </div>
+
+      <AccountPanel />
 
       <nav className="px-3 py-3 border-b border-line flex flex-col gap-1">
         <SidebarLink to="/" label="Dashboard" icon="🏠" end />

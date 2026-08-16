@@ -2,7 +2,8 @@
 
 An interactive learning app for organizing VIT Vellore B.Tech CSE coursework semester-by-semester: tutorials with
 built-in interactive widgets, practice quizzes, progress tracking, and a study planner with an (optional) Notion
-sync.
+sync. Supports light/dark theme + adjustable text size, and optional Google/GitHub sign-in to sync progress across
+devices.
 
 ## Structure
 
@@ -56,6 +57,30 @@ The planner works fully offline against `server/data/planner.json`. To link it t
 4. Copy `server/.env.example` to `server/.env` and fill in `NOTION_TOKEN` and `NOTION_DATABASE_ID`.
 5. Restart the server — the Planner page's Notion panel will show "Connected" and expose Push/Pull
    buttons.
+
+## Sign-in (progress sync)
+
+Signing in is optional — everything works anonymously (progress in the browser's local storage, a
+shared local planner board). Signing in with Google or GitHub instead stores your progress and
+planner tasks on the server keyed to your account, so they follow you across devices. **This only
+works when you run the app locally** — GitHub Pages is static hosting and can't run the
+server-side OAuth exchange, so sign-in is disabled on the public deployed link.
+
+To enable it:
+
+1. **Google**: create an OAuth client at
+   [console.cloud.google.com/apis/credentials](https://console.cloud.google.com/apis/credentials)
+   (type "Web application"), with authorized redirect URI
+   `http://localhost:4001/api/auth/google/callback`.
+2. **GitHub**: create an OAuth App at
+   [github.com/settings/developers](https://github.com/settings/developers), with callback URL
+   `http://localhost:4001/api/auth/github/callback`.
+3. Copy `server/.env.example` to `server/.env` and fill in whichever provider's client ID/secret
+   you set up (both are optional — you can configure just one).
+4. Restart the server. The sidebar's "Sync your progress" panel will show working sign-in buttons.
+
+User records (`server/data/users.json`) and per-user progress (`server/data/progress.json`) are
+gitignored — they hold real names/emails and never belong in the repo.
 
 ## Status
 
